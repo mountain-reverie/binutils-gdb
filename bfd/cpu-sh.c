@@ -63,7 +63,8 @@ static const bfd_arch_info_type arch_info_struct[] =
   N (bfd_mach_sh2a_nofpu_or_sh4_nommu_nofpu, "sh2a-nofpu-or-sh4-nommu-nofpu", false, arch_info_struct + 16),
   N (bfd_mach_sh2a_nofpu_or_sh3_nommu, "sh2a-nofpu-or-sh3-nommu", false, arch_info_struct + 17),
   N (bfd_mach_sh2a_or_sh4,  "sh2a-or-sh4",  false, arch_info_struct + 18),
-  N (bfd_mach_sh2a_or_sh3e, "sh2a-or-sh3e", false, NULL)
+  N (bfd_mach_sh2a_or_sh3e, "sh2a-or-sh3e", false, arch_info_struct + 19),
+  N (bfd_mach_sh_jcore,     "sh-jcore",     false, NULL)
 };
 
 const bfd_arch_info_type bfd_sh_arch =
@@ -99,6 +100,7 @@ static struct { unsigned long bfd_mach, arch, arch_up; } bfd_to_arch_table[] =
   { bfd_mach_sh4_nofpu,	      arch_sh4_nofpu,	    arch_sh4_nofpu_up },
   { bfd_mach_sh4_nommu_nofpu, arch_sh4_nommu_nofpu, arch_sh4_nommu_nofpu_up },
   { bfd_mach_sh4a_nofpu,      arch_sh4a_nofpu,	    arch_sh4a_nofpu_up },
+  { bfd_mach_sh_jcore,        arch_j_core,	    arch_j_core_up },
   { 0, 0, 0 }	/* Terminator.  */
 };
 

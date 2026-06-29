@@ -216,7 +216,8 @@ sh_dsp_reg_nums;
 #define arch_sh4_base	    (1 << 5)
 #define arch_sh4a_base	    (1 << 6)
 #define arch_sh2a_base      (1 << 7)
-#define arch_sh_base_mask   MASK (0, 7)
+#define arch_j_core_base    (1 << 8)
+#define arch_sh_base_mask   MASK (0, 8)
 
 /* Bits 8 ... 24 are currently free.  */
 
@@ -256,6 +257,9 @@ sh_dsp_reg_nums;
 #define arch_sh2a_nofpu_or_sh3_nommu       (arch_sh2a_sh3_base|arch_sh_no_mmu |arch_sh_no_co)
 #define arch_sh2a_or_sh3e                  (arch_sh2a_sh4_base|arch_sh_no_mmu |arch_sh_sp_fpu)
 #define arch_sh2a_or_sh4                   (arch_sh2a_sh4_base|arch_sh_no_mmu |arch_sh_dp_fpu)
+
+#define arch_j_core                        (arch_j_core_base  |arch_sh_no_mmu |arch_sh_no_co)
+#define arch_j_core_up                     (arch_j_core | arch_sh2_up)
 
 #define SH_MERGE_ARCH_SET(SET1, SET2) ((SET1) & (SET2))
 #define SH_VALID_BASE_ARCH_SET(SET) (((SET) & arch_sh_base_mask) != 0)
@@ -316,7 +320,8 @@ SH4AL-dsp                                          SH4A
 
 /* Central branches.  */
 #define arch_sh_up                             (arch_sh1 \
-		| arch_sh2_up)
+		| arch_sh2_up \
+		| arch_j_core)
 #define arch_sh2_up                            (arch_sh2 \
 		| arch_sh2e_up \
 		| arch_sh2a_nofpu_or_sh3_nommu_up \
