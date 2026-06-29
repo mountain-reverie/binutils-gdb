@@ -779,6 +779,36 @@ parse_reg_without_prefix (char *src, sh_arg_type *mode, int *reg)
       return 3;
     }
 
+  if (l0 == 'p' && l1 == 't' && TOLOWER (src[2]) == 'e'
+      && TOLOWER (src[3]) == 'h' && ! IDENT_CHAR (src[4]))
+    {
+      *mode = A_PTEH;
+      return 4;
+    }
+
+  if (l0 == 'p' && l1 == 't' && TOLOWER (src[2]) == 'e'
+      && TOLOWER (src[3]) == 'l' && ! IDENT_CHAR (src[4]))
+    {
+      *mode = A_PTEL;
+      return 4;
+    }
+
+  if (l0 == 'a' && l1 == 's' && TOLOWER (src[2]) == 'i'
+      && TOLOWER (src[3]) == 'd' && TOLOWER (src[4]) == 'r'
+      && ! IDENT_CHAR (src[5]))
+    {
+      *mode = A_ASIDR;
+      return 5;
+    }
+
+  if (l0 == 't' && l1 == 's' && TOLOWER (src[2]) == 'b'
+      && TOLOWER (src[3]) == 'p' && TOLOWER (src[4]) == 't'
+      && TOLOWER (src[5]) == 'r' && ! IDENT_CHAR (src[6]))
+    {
+      *mode = A_TSBPTR;
+      return 6;
+    }
+
   if (l0 == 's' && l1 == 'r' && ! IDENT_CHAR (src[2]))
     {
       *mode = A_SR;
@@ -1354,6 +1384,10 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	    case A_SPC:
 	    case A_SGR:
 	    case A_DBR:
+	    case A_PTEH:
+	    case A_PTEL:
+	    case A_ASIDR:
+	    case A_TSBPTR:
 	      if (user->type != arg)
 		goto fail;
 	      break;

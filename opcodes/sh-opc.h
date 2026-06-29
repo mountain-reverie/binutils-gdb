@@ -178,6 +178,10 @@ typedef enum
     A_SPC,
     A_SGR,
     A_DBR,
+    A_PTEH,
+    A_PTEL,
+    A_ASIDR,
+    A_TSBPTR,
     F_REG_N,
     F_REG_M,
     D_REG_N,
@@ -768,6 +772,12 @@ const sh_opcode_info sh_table[] =
 /* 0000nnnn00111010 stc SGR,<REG_N>     */{"stc",{A_SGR,A_REG_N},{HEX_0,REG_N,HEX_3,HEX_A}, arch_sh4_nommu_nofpu_up},
 
 /* 0000nnnn11111010 stc DBR,<REG_N>     */{"stc",{A_DBR,A_REG_N},{HEX_0,REG_N,HEX_F,HEX_A}, arch_sh4_nommu_nofpu_up},
+
+/* 0000nnnn01010011 stc pteh,<REG_N>   */{"stc",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_3}, arch_j_core},
+/* 0000nnnn01100011 stc ptel,<REG_N>   */{"stc",{A_PTEL,A_REG_N,0},{HEX_0,REG_N,HEX_6,HEX_3}, arch_j_core},
+/* 0000nnnn01110011 stc asidr,<REG_N>  */{"stc",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_7,HEX_3}, arch_j_core},
+/* 0000nnnn01000011 stc tsbptr,<REG_N> */{"stc",{A_TSBPTR,A_REG_N,0},{HEX_0,REG_N,HEX_4,HEX_3}, arch_j_core},
+/* 0000000001111000 ldtlb.rn           */{"ldtlb.rn",{0},{HEX_0,HEX_0,HEX_7,HEX_8}, arch_j_core},
 
 /* 0000nnnn1xxx0010 stc Rn_BANK,<REG_N> */{"stc",{A_REG_B,A_REG_N},{HEX_0,REG_N,REG_B,HEX_2}, arch_sh3_nommu_up},
 
