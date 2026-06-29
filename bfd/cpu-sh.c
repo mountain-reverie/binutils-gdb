@@ -100,7 +100,7 @@ static struct { unsigned long bfd_mach, arch, arch_up; } bfd_to_arch_table[] =
   { bfd_mach_sh4_nofpu,	      arch_sh4_nofpu,	    arch_sh4_nofpu_up },
   { bfd_mach_sh4_nommu_nofpu, arch_sh4_nommu_nofpu, arch_sh4_nommu_nofpu_up },
   { bfd_mach_sh4a_nofpu,      arch_sh4a_nofpu,	    arch_sh4a_nofpu_up },
-  { bfd_mach_sh_jcore,        arch_j_core,	    arch_j_core_up },
+  { bfd_mach_sh_jcore,        arch_j_core_up,	    arch_j_core_up },
   { 0, 0, 0 }	/* Terminator.  */
 };
 
