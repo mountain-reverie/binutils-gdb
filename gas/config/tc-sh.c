@@ -1380,6 +1380,12 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	      reg_n = user->reg;
 	      break;
 
+	    case A_IND_0:
+	      /* Opcode needs @r0 (fixed indirect of R0); does not set reg_m.  */
+	      if (user->type != A_IND_N || user->reg != 0)
+		goto fail;
+	      break;
+
 	    case A_REG_M:
 	    case A_INC_M:
 	    case A_DEC_M:

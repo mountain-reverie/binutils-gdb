@@ -718,6 +718,9 @@ print_insn_sh (bfd_vma memaddr, struct disassemble_info *info)
 	    case A_DEC_M:
 	      fprintf_fn (stream, "@-r%d", rm);
 	      break;
+	    case A_IND_0:
+	      fprintf_fn (stream, "@r0");
+	      break;
 	    case A_IND_M:
 	      fprintf_fn (stream, "@r%d", rm);
 	      break;

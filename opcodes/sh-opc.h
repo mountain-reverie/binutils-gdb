@@ -117,6 +117,7 @@ typedef enum
     A_IMM,
     A_INC_M,
     A_INC_N,
+    A_IND_0,
     A_IND_M,
     A_IND_N,
     A_IND_R0_REG_M,
@@ -320,8 +321,7 @@ SH4AL-dsp                                          SH4A
 
 /* Central branches.  */
 #define arch_sh_up                             (arch_sh1 \
-		| arch_sh2_up \
-		| arch_j_core)
+		| arch_sh2_up)
 #define arch_sh2_up                            (arch_sh2 \
 		| arch_sh2e_up \
 		| arch_sh2a_nofpu_or_sh3_nommu_up \
@@ -417,7 +417,11 @@ const sh_opcode_info sh_table[] =
 
 /* 10001111i8p1.... bf/s <bdisp8>       */{"bf/s",{A_BDISP8},{HEX_8,HEX_F,BRANCH_8}, arch_sh2_up},
 
+/* 0000000000111011 bgnd                */{"bgnd",{0},{HEX_0,HEX_0,HEX_3,HEX_B}, arch_j_core},
+
 /* 0000000010001000 clrdmxy             */{"clrdmxy",{0},{HEX_0,HEX_0,HEX_8,HEX_8}, arch_sh4al_dsp_up},
+
+/* 0010nnnnmmmm0011 cas.l <REG_M>,<REG_N>,@<REG_0> */{"cas.l",{A_REG_M,A_REG_N,A_IND_0,0},{HEX_2,REG_N,REG_M,HEX_3}, arch_j_core},
 
 /* 0000000000101000 clrmac              */{"clrmac",{0},{HEX_0,HEX_0,HEX_2,HEX_8}, arch_sh_up},
 
