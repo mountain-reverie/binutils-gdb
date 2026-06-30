@@ -809,6 +809,48 @@ parse_reg_without_prefix (char *src, sh_arg_type *mode, int *reg)
       return 6;
     }
 
+  /* J-core coprocessor operands: cp0_com / cpi_com command registers and
+     cp0_r<N> / cpi_r<N> coprocessor register files (N = 0..15).  */
+  if (l0 == 'c' && l1 == 'p'
+      && (TOLOWER (src[2]) == '0' || TOLOWER (src[2]) == 'i')
+      && src[3] == '_')
+    {
+      int cpi = (TOLOWER (src[2]) == 'i');
+
+      /* Match the command register first (4th char 'c' vs 'r').  */
+      if (TOLOWER (src[4]) == 'c' && TOLOWER (src[5]) == 'o'
+	  && TOLOWER (src[6]) == 'm' && ! IDENT_CHAR (src[7]))
+	{
+	  *mode = cpi ? A_CPI_COM : A_CP0_COM;
+	  return 7;
+	}
+
+      if (TOLOWER (src[4]) == 'r' && src[5] >= '0' && src[5] <= '9')
+	{
+	  int n, len;
+
+	  if (src[6] >= '0' && src[6] <= '9' && ! IDENT_CHAR (src[7]))
+	    {
+	      n = (src[5] - '0') * 10 + (src[6] - '0');
+	      len = 7;
+	    }
+	  else if (! IDENT_CHAR (src[6]))
+	    {
+	      n = src[5] - '0';
+	      len = 6;
+	    }
+	  else
+	    n = -1, len = 0;
+
+	  if (n >= 0 && n <= 15)
+	    {
+	      *mode = cpi ? A_CPI_REG_N : A_CP0_REG_N;
+	      *reg = n;
+	      return len;
+	    }
+	}
+    }
+
   if (l0 == 's' && l1 == 'r' && ! IDENT_CHAR (src[2]))
     {
       *mode = A_SR;
@@ -1362,10 +1404,22 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	    case FPUL_N:
 	    case FPSCR_N:
 	    case DSP_REG_N:
+	    case A_CP0_REG_N:
+	    case A_CPI_REG_N:
 	      /* Opcode needs rn */
 	      if (user->type != arg)
 		goto fail;
 	      reg_n = user->reg;
+	      break;
+	    case A_CP0_REG_M:
+	      if (user->type != A_CP0_REG_N)
+		goto fail;
+	      reg_m = user->reg;
+	      break;
+	    case A_CPI_REG_M:
+	      if (user->type != A_CPI_REG_N)
+		goto fail;
+	      reg_m = user->reg;
 	      break;
 	    case DX_REG_N:
 	      if (user->type != D_REG_N && user->type != X_REG_N)
@@ -1388,6 +1442,8 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	    case A_PTEL:
 	    case A_ASIDR:
 	    case A_TSBPTR:
+	    case A_CP0_COM:
+	    case A_CPI_COM:
 	      if (user->type != arg)
 		goto fail;
 	      break;

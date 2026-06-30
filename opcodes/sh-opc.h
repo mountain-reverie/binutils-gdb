@@ -182,6 +182,12 @@ typedef enum
     A_PTEL,
     A_ASIDR,
     A_TSBPTR,
+    A_CP0_COM,
+    A_CP0_REG_M,
+    A_CP0_REG_N,
+    A_CPI_COM,
+    A_CPI_REG_M,
+    A_CPI_REG_N,
     F_REG_N,
     F_REG_M,
     D_REG_N,
@@ -546,6 +552,11 @@ const sh_opcode_info sh_table[] =
 
 /* 0100nnnn01101010 lds <REG_M>,FPSCR   */{"lds",{A_REG_M,FPSCR_N},{HEX_4,REG_M,HEX_6,HEX_A}, arch_sh2e_up},
 
+/* 0100mmmm10001000 lds <REG_M>,cp0_com */{"lds",{A_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_8},arch_j_core},
+/* 0100mmmm01011010 lds <REG_M>,cpi_com */{"lds",{A_REG_M,A_CPI_COM,0},{HEX_4,REG_M,HEX_5,HEX_A},arch_j_core},
+/* 0100mmmm10001001 clds cp0_rm,cp0_com */{"clds",{A_CP0_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_9},arch_j_core},
+/* 1111mmmm00011101 clds cpi_rm,cpi_com */{"clds",{A_CPI_REG_M,A_CPI_COM,0},{HEX_F,REG_M,HEX_1,HEX_D},arch_j_core},
+
 /* 0100nnnn00000110 lds.l @<REG_N>+,MACH*/{"lds.l",{A_INC_N,A_MACH},{HEX_4,REG_N,HEX_0,HEX_6}, arch_sh_up},
 
 /* 0100nnnn00010110 lds.l @<REG_N>+,MACL*/{"lds.l",{A_INC_N,A_MACL},{HEX_4,REG_N,HEX_1,HEX_6}, arch_sh_up},
@@ -826,6 +837,11 @@ const sh_opcode_info sh_table[] =
 /* 0000nnnn01011010 sts FPUL,<REG_N>    */{"sts",{FPUL_M,A_REG_N},{HEX_0,REG_N,HEX_5,HEX_A}, arch_sh2e_up},
 
 /* 0000nnnn01101010 sts FPSCR,<REG_N>   */{"sts",{FPSCR_M,A_REG_N},{HEX_0,REG_N,HEX_6,HEX_A}, arch_sh2e_up},
+
+/* 0100nnnn11001000 sts cp0_com,<REG_N> */{"sts",{A_CP0_COM,A_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_8},arch_j_core},
+/* 0000nnnn01011010 sts cpi_com,<REG_N> */{"sts",{A_CPI_COM,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_A},arch_j_core},
+/* 0100nnnn11001001 csts cpi_com,cp0_rn */{"csts",{A_CP0_COM,A_CP0_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_9},arch_j_core},
+/* 1111nnnn00001101 csts cpi_com,cpi_rn */{"csts",{A_CPI_COM,A_CPI_REG_N,0},{HEX_F,REG_N,HEX_0,HEX_D},arch_j_core},
 
 /* 0100nnnn00000010 sts.l MACH,@-<REG_N>*/{"sts.l",{A_MACH,A_DEC_N},{HEX_4,REG_N,HEX_0,HEX_2}, arch_sh_up},
 
