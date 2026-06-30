@@ -840,7 +840,7 @@ const sh_opcode_info sh_table[] =
 
 /* 0100nnnn11001000 sts cp0_com,<REG_N> */{"sts",{A_CP0_COM,A_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_8},arch_j_core},
 /* 0000nnnn01011010 sts cpi_com,<REG_N> */{"sts",{A_CPI_COM,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_A},arch_j_core},
-/* 0100nnnn11001001 csts cpi_com,cp0_rn */{"csts",{A_CP0_COM,A_CP0_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_9},arch_j_core},
+/* 0100nnnn11001001 csts cp0_com,cp0_rn */{"csts",{A_CP0_COM,A_CP0_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_9},arch_j_core},
 /* 1111nnnn00001101 csts cpi_com,cpi_rn */{"csts",{A_CPI_COM,A_CPI_REG_N,0},{HEX_F,REG_N,HEX_0,HEX_D},arch_j_core},
 
 /* 0100nnnn00000010 sts.l MACH,@-<REG_N>*/{"sts.l",{A_MACH,A_DEC_N},{HEX_4,REG_N,HEX_0,HEX_2}, arch_sh_up},
