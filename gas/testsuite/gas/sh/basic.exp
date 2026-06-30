@@ -135,6 +135,8 @@ if [istarget sh*-*-*] then {
     }
 
     if {[istarget sh*-*elf] || [istarget sh*-*linux*]} then {
+	run_dump_test "jcore"
+
 	run_dump_test "sh4a"
 	run_dump_test "sh4a-fp"
 
