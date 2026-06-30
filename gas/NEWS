@@ -1,7 +1,7 @@
 -*- text -*-
 
 * Add support for J-core (sh-jcore) SH assembler target via -isa=sh-jcore,
-  including cas.l, bgnd, ldtlb.rn, MMU register stc/sts, and coprocessor
+  including cas.l, bgnd, ldtlb.rn, MMU register reads (stc), and coprocessor
   lds/sts/clds/csts instructions.
 
 * The legacy .vtable_entry and .vtable_inherit directives that were

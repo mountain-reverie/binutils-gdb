@@ -282,13 +282,13 @@ Store MMU control register to @code{Rn}.  @code{tsbptr} is read-only.
 @itemx sts cpi_com,Rn
 Load/store the CP0 or CPi accumulator communication register.
 
-@item clds Rm,cp0_r0 @r{...} clds Rm,cp0_r15
-@itemx clds Rm,cpi_r0 @r{...} clds Rm,cpi_r15
-Load a general register into a coprocessor data register.
+@item clds cp0_r0,cp0_com @r{...} clds cp0_r15,cp0_com
+@itemx clds cpi_r0,cpi_com @r{...} clds cpi_r15,cpi_com
+Copy a coprocessor data register to the coprocessor communication register.
 
-@item csts cp0_r0,Rn @r{...} csts cp0_r15,Rn
-@itemx csts cpi_r0,Rn @r{...} csts cpi_r15,Rn
-Store a coprocessor data register to a general register.
+@item csts cp0_com,cp0_r0 @r{...} csts cp0_com,cp0_r15
+@itemx csts cpi_com,cpi_r0 @r{...} csts cpi_com,cpi_r15
+Copy the coprocessor communication register to a coprocessor data register.
 @end table
 
 @node SH Opcodes
