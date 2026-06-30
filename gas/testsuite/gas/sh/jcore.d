@@ -2,7 +2,7 @@
 #name: SH J-core instructions
 #as: -isa=sh-jcore
 
-.*:.*file format elf32-sh.*
+.*: +file format .*sh.*
 
 Disassembly of section \.text:
 0+000 <[^>]*> 22 13 [ 	]*cas\.l	r1,r2,@r0

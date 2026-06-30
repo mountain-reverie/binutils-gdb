@@ -431,7 +431,7 @@ const sh_opcode_info sh_table[] =
 
 /* 0000000010001000 clrdmxy             */{"clrdmxy",{0},{HEX_0,HEX_0,HEX_8,HEX_8}, arch_sh4al_dsp_up},
 
-/* 0010nnnnmmmm0011 cas.l <REG_M>,<REG_N>,@<REG_0> */{"cas.l",{A_REG_M,A_REG_N,A_IND_0,0},{HEX_2,REG_N,REG_M,HEX_3}, arch_j_core},
+/* 0010nnnnmmmm0011 cas.l <REG_M>,<REG_N>,@R0 */{"cas.l",{A_REG_M,A_REG_N,A_IND_0,0},{HEX_2,REG_N,REG_M,HEX_3}, arch_j_core},
 
 /* 0000000000101000 clrmac              */{"clrmac",{0},{HEX_0,HEX_0,HEX_2,HEX_8}, arch_sh_up},
 

@@ -840,7 +840,8 @@ parse_reg_without_prefix (char *src, sh_arg_type *mode, int *reg)
 	      len = 6;
 	    }
 	  else
-	    n = -1, len = 0;
+	    n = -1;
+	    len = 0;
 
 	  if (n >= 0 && n <= 15)
 	    {
