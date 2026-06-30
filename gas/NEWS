@@ -1,5 +1,9 @@
 -*- text -*-
 
+* Add support for J-core (sh-jcore) SH assembler target via -isa=sh-jcore,
+  including cas.l, bgnd, ldtlb.rn, MMU register stc/sts, and coprocessor
+  lds/sts/clds/csts instructions.
+
 * The legacy .vtable_entry and .vtable_inherit directives that were
   needed for versions of GCC prior to gcc-3.0 (when the generic C++
   ABI was adopted) are now considered obsolete.  They are now deprecated

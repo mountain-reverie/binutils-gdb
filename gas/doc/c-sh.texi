@@ -11,6 +11,7 @@
 * SH Syntax::               Syntax
 * SH Floating Point::       Floating Point
 * SH Directives::           SH Machine Directives
+* SH J-core Extensions::    J-core Extensions
 * SH Opcodes::              Opcodes
 @end menu
 
@@ -65,6 +66,11 @@ Enable sh-dsp insns, and disable sh3e / sh4 insns.
 Enable sh2e, sh3e, sh4, and sh4a insn sets.
 @item --isa=all
 Enable sh1, sh2, sh2e, sh3, sh3e, sh4, sh4a, and sh-dsp insn sets.
+@item --isa=sh-jcore
+Enable J-core extensions: SH-2 base plus J-core-specific instructions
+(@code{cas.l}, @code{bgnd}, @code{ldtlb.rn}, MMU control register
+access via @code{stc}, and coprocessor @code{lds}/@code{sts}/@code{clds}/@code{csts}).
+No MMU or coprocessor restrictions from SH-3/SH-4 apply.
 
 @item -h-tick-hex
 Support H'00 style hex constants in addition to 0x00 style.
@@ -133,6 +139,27 @@ global base register
 @item vbr
 vector base register (for interrupt vectors)
 @end table
+
+When @option{--isa=sh-jcore} is specified, the following additional
+control registers are available via @code{stc}:
+
+@table @code
+@item pteh
+page table entry high register (MMU)
+
+@item ptel
+page table entry low register (MMU)
+
+@item asidr
+address space identifier register (MMU)
+
+@item tsbptr
+translation support buffer pointer register (MMU, read-only via @code{stc})
+@end table
+
+The J-core coprocessor registers are named @code{cp0_r0}--@code{cp0_r15}
+(CP0 data) and @code{cpi_r0}--@code{cpi_r15} (CPi data); the accumulator
+communication registers are named @code{cp0_com} and @code{cpi_com}.
 
 @node SH-Addressing
 @subsection Addressing Modes
@@ -219,6 +246,49 @@ conventional architectures at the same frequency.
 @code{.long}, or @code{.quad} directive is used.  You may use
 @code{.uaword}, @code{.ualong}, or @code{.uaquad} to indicate that the
 value is intentionally misaligned.
+@end table
+
+@node SH J-core Extensions
+@section J-core Extensions
+
+@cindex J-core extensions, SH
+@cindex sh-jcore
+Assembling with @option{--isa=sh-jcore} enables J-core-specific
+instructions in addition to the SH-2 base instruction set.
+
+@table @code
+@item cas.l Rm,Rn,@@R0
+Compare-and-swap longword.  Atomically compares the value at the
+address in @code{R0} with @code{Rn}; if equal, stores @code{Rm} there
+and sets the T bit; otherwise loads the current value into @code{Rn}
+and clears T.
+
+@item bgnd
+Background --- transfer control to the background debugger (breakpoint).
+
+@item ldtlb.rn
+Load TLB from @code{PTEH}/@code{PTEL} and return (fused fill-and-return
+from the TLB miss handler).
+
+@item stc pteh,Rn
+@itemx stc ptel,Rn
+@itemx stc asidr,Rn
+@itemx stc tsbptr,Rn
+Store MMU control register to @code{Rn}.  @code{tsbptr} is read-only.
+
+@item lds Rm,cp0_com
+@itemx lds Rm,cpi_com
+@itemx sts cp0_com,Rn
+@itemx sts cpi_com,Rn
+Load/store the CP0 or CPi accumulator communication register.
+
+@item clds Rm,cp0_r0 @r{...} clds Rm,cp0_r15
+@itemx clds Rm,cpi_r0 @r{...} clds Rm,cpi_r15
+Load a general register into a coprocessor data register.
+
+@item csts cp0_r0,Rn @r{...} csts cp0_r15,Rn
+@itemx csts cpi_r0,Rn @r{...} csts cpi_r15,Rn
+Store a coprocessor data register to a general register.
 @end table
 
 @node SH Opcodes

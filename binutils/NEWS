@@ -1,5 +1,9 @@
 -*- text -*-
 
+* Add BFD support for J-core SH variant (bfd_mach_sh_jcore / EF_SH_J_CORE),
+  enabling -isa=sh-jcore assembler support and correct ELF machine identification
+  for J-core binaries.
+
 * The AArch64 disassembler now accepts a command line option of "-M annotate"
   which displays the symbol associated with undefined instructions, should
   there be one.
