@@ -66,7 +66,7 @@ static const bfd_arch_info_type arch_info_struct[] =
   N (bfd_mach_sh2a_or_sh3e, "sh2a-or-sh3e", false, arch_info_struct + 19),
   N (bfd_mach_sh_j2,        "sh-j2",        false, arch_info_struct + 20),
   N (bfd_mach_sh_jcore,     "sh-jcore",     false, arch_info_struct + 21),
-  N (bfd_mach_sh_jcore,     "sh-j4",        false, NULL)
+  N (bfd_mach_sh_j4,        "sh-j4",        false, NULL)
 };
 
 const bfd_arch_info_type bfd_sh_arch =
@@ -110,7 +110,14 @@ static struct { unsigned long bfd_mach, arch, arch_up; } bfd_to_arch_table[] =
      the MMU/priv extensions; arch_j4_up == arch_j4 (a leaf, no further
      descendants) already covers both via the arch_sh2_up fold, so
      generic SH-2 opcodes, J2-shared opcodes, and J4-only opcodes are
-     all valid here.  */
+     all valid here.  bfd_mach_sh_j4 is J4's own distinct bfd mach (it
+     used to alias bfd_mach_sh_jcore, which produced non-J4 "sh-jcore"
+     output objects); this row must precede the legacy sh-jcore row
+     below so sh_get_bfd_mach_from_arch_set() picks bfd_mach_sh_j4 on
+     ties for arch_j4_up.  */
+  { bfd_mach_sh_j4,           arch_j4_up,	    arch_j4_up },
+  /* Legacy "sh-jcore" alias, kept so --isa=sh-jcore keeps resolving to
+     the same arch_j4_up feature set it always has.  */
   { bfd_mach_sh_jcore,        arch_j4_up,	    arch_j4_up },
   { 0, 0, 0 }	/* Terminator.  */
 };

@@ -301,6 +301,7 @@ DESCRIPTION
 .#define bfd_mach_sh4al_dsp			0x4d
 .#define bfd_mach_sh_jcore			0x4e
 .#define bfd_mach_sh_j2				0x4f
+.#define bfd_mach_sh_j4				0x50
 .  bfd_arch_alpha,     {* Dec Alpha.  *}
 .#define bfd_mach_alpha_ev4	0x10
 .#define bfd_mach_alpha_ev5	0x20
