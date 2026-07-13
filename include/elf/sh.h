@@ -51,6 +51,7 @@ extern "C" {
 #define EF_SH2A_SH4        23
 #define EF_SH2A_SH3E       24
 #define EF_SH_J_CORE       25
+#define EF_SH_J2           26
 
 /* This one can only mix in objects from other EF_SH5 objects.  */
 #define EF_SH5		  10
@@ -83,7 +84,8 @@ extern "C" {
 /* EF_SH2A_SH3_NOFPU    */ bfd_mach_sh2a_nofpu_or_sh3_nommu, \
 /* EF_SH2A_SH4          */ bfd_mach_sh2a_or_sh4 , \
 /* EF_SH2A_SH3E         */ bfd_mach_sh2a_or_sh3e , \
-/* EF_SH_J_CORE          */ bfd_mach_sh_jcore
+/* EF_SH_J_CORE          */ bfd_mach_sh_jcore, \
+/* EF_SH_J2              */ bfd_mach_sh_j2
 
 /* Convert arch_sh* into EF_SH*.  */
 int sh_find_elf_flags (unsigned int arch_set);

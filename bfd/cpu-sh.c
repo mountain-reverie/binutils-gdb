@@ -64,7 +64,9 @@ static const bfd_arch_info_type arch_info_struct[] =
   N (bfd_mach_sh2a_nofpu_or_sh3_nommu, "sh2a-nofpu-or-sh3-nommu", false, arch_info_struct + 17),
   N (bfd_mach_sh2a_or_sh4,  "sh2a-or-sh4",  false, arch_info_struct + 18),
   N (bfd_mach_sh2a_or_sh3e, "sh2a-or-sh3e", false, arch_info_struct + 19),
-  N (bfd_mach_sh_jcore,     "sh-jcore",     false, NULL)
+  N (bfd_mach_sh_j2,        "sh-j2",        false, arch_info_struct + 20),
+  N (bfd_mach_sh_jcore,     "sh-jcore",     false, arch_info_struct + 21),
+  N (bfd_mach_sh_jcore,     "sh-j4",        false, NULL)
 };
 
 const bfd_arch_info_type bfd_sh_arch =
@@ -100,7 +102,16 @@ static struct { unsigned long bfd_mach, arch, arch_up; } bfd_to_arch_table[] =
   { bfd_mach_sh4_nofpu,	      arch_sh4_nofpu,	    arch_sh4_nofpu_up },
   { bfd_mach_sh4_nommu_nofpu, arch_sh4_nommu_nofpu, arch_sh4_nommu_nofpu_up },
   { bfd_mach_sh4a_nofpu,      arch_sh4a_nofpu,	    arch_sh4a_nofpu_up },
-  { bfd_mach_sh_jcore,        arch_j_core_up,	    arch_j_core_up },
+  /* J2 target: arch_j2 (NOT arch_j2_up) deliberately excludes the
+     J4-only MMU/priv extensions (arch_j4), so ldtlb.rn etc. are
+     rejected under --isa=sh-j2.  */
+  { bfd_mach_sh_j2,           arch_j2,	            arch_j2 },
+  /* J4 target: J4 hardware supports the full J-core base ISA (J2) plus
+     the MMU/priv extensions; arch_j4_up == arch_j4 (a leaf, no further
+     descendants) already covers both via the arch_sh2_up fold, so
+     generic SH-2 opcodes, J2-shared opcodes, and J4-only opcodes are
+     all valid here.  */
+  { bfd_mach_sh_jcore,        arch_j4_up,	    arch_j4_up },
   { 0, 0, 0 }	/* Terminator.  */
 };
 

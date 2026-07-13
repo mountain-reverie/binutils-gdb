@@ -227,10 +227,11 @@ sh_dsp_reg_nums;
 #define arch_sh4_base	    (1 << 5)
 #define arch_sh4a_base	    (1 << 6)
 #define arch_sh2a_base      (1 << 7)
-#define arch_j_core_base    (1 << 8)
-#define arch_sh_base_mask   MASK (0, 8)
+#define arch_j2_base        (1 << 8)
+#define arch_j4_base        (1 << 9)
+#define arch_sh_base_mask   MASK (0, 9)
 
-/* Bits 8 ... 24 are currently free.  */
+/* Bits 10 ... 24 are currently free.  */
 
 /* This is an annotation on instruction types, but we
    abuse the arch field in instructions to denote it.  */
@@ -269,8 +270,26 @@ sh_dsp_reg_nums;
 #define arch_sh2a_or_sh3e                  (arch_sh2a_sh4_base|arch_sh_no_mmu |arch_sh_sp_fpu)
 #define arch_sh2a_or_sh4                   (arch_sh2a_sh4_base|arch_sh_no_mmu |arch_sh_dp_fpu)
 
-#define arch_j_core                        (arch_j_core_base  |arch_sh_no_mmu |arch_sh_no_co)
-#define arch_j_core_up                     (arch_j_core | arch_sh2_up)
+/* J-core has two gas targets: J2 (base J-core ISA, no MMU) and J4
+   (J2 plus the MMU/privileged-mode extensions).  J2 insns are valid on
+   both J2 and J4 hardware, so arch_j2 (and arch_j2_up) must not be tied
+   to a single mmu/no-mmu bit -- it is folded into arch_sh2_up below so
+   that ordinary SH-2 opcodes (arch_sh_up/arch_sh2_up) keep the J-core
+   base/mmu bits alive across an intermixed instruction stream, and so
+   that the arch_j2_up/arch_j4_up running-arch masks stay compatible
+   with plain SH-2 opcodes.  arch_j4 insns (the MMU/priv extensions)
+   are J4-only and are NOT included in arch_j2_up.  */
+#define arch_j2                            (arch_j2_base|arch_sh_no_mmu |arch_sh_no_co)
+#define arch_j4                            (arch_j4_base|arch_sh_has_mmu|arch_sh_no_co)
+#define arch_j4_up                         (arch_j4)
+#define arch_j2_up                         (arch_j2 | arch_j4_up)
+
+/* Retained for source compatibility; arch_j_core was the old (buggy)
+   single J-core tag that lacked the arch_sh2_up lineage and could not
+   discriminate J2 from J4.  New code should use arch_j2/arch_j2_up or
+   arch_j4/arch_j4_up.  */
+#define arch_j_core                        arch_j2
+#define arch_j_core_up                     arch_j2_up
 
 #define SH_MERGE_ARCH_SET(SET1, SET2) ((SET1) & (SET2))
 #define SH_VALID_BASE_ARCH_SET(SET) (((SET) & arch_sh_base_mask) != 0)
@@ -335,7 +354,8 @@ SH4AL-dsp                                          SH4A
 #define arch_sh2_up                            (arch_sh2 \
 		| arch_sh2e_up \
 		| arch_sh2a_nofpu_or_sh3_nommu_up \
-		| arch_sh_dsp_up)
+		| arch_sh_dsp_up \
+		| arch_j2_up)
 #define arch_sh2a_nofpu_or_sh3_nommu_up        (arch_sh2a_nofpu_or_sh3_nommu \
 		| arch_sh2a_nofpu_or_sh4_nommu_nofpu_up \
 		| arch_sh2a_or_sh3e_up \
@@ -427,11 +447,11 @@ const sh_opcode_info sh_table[] =
 
 /* 10001111i8p1.... bf/s <bdisp8>       */{"bf/s",{A_BDISP8},{HEX_8,HEX_F,BRANCH_8}, arch_sh2_up},
 
-/* 0000000000111011 bgnd                */{"bgnd",{0},{HEX_0,HEX_0,HEX_3,HEX_B}, arch_j_core},
+/* 0000000000111011 bgnd                */{"bgnd",{0},{HEX_0,HEX_0,HEX_3,HEX_B}, arch_j2_up},
 
 /* 0000000010001000 clrdmxy             */{"clrdmxy",{0},{HEX_0,HEX_0,HEX_8,HEX_8}, arch_sh4al_dsp_up},
 
-/* 0010nnnnmmmm0011 cas.l <REG_M>,<REG_N>,@R0 */{"cas.l",{A_REG_M,A_REG_N,A_IND_0,0},{HEX_2,REG_N,REG_M,HEX_3}, arch_j_core},
+/* 0010nnnnmmmm0011 cas.l <REG_M>,<REG_N>,@R0 */{"cas.l",{A_REG_M,A_REG_N,A_IND_0,0},{HEX_2,REG_N,REG_M,HEX_3}, arch_j2_up},
 
 /* 0000000000101000 clrmac              */{"clrmac",{0},{HEX_0,HEX_0,HEX_2,HEX_8}, arch_sh_up},
 
@@ -491,9 +511,9 @@ const sh_opcode_info sh_table[] =
    MOD/RE/RS forms below, so that disassembly for the j-core target (which
    never implements SH-DSP) prefers the j-core mnemonic on these encodings
    that the two architecture families otherwise share.  */
-/* 0100mmmm01011110 ldc <REG_M>,pteh    */{"ldc",{A_REG_M,A_PTEH,0},{HEX_4,REG_M,HEX_5,HEX_E}, arch_j_core},
-/* 0100mmmm01101110 ldc <REG_M>,ptel    */{"ldc",{A_REG_M,A_PTEL,0},{HEX_4,REG_M,HEX_6,HEX_E}, arch_j_core},
-/* 0100mmmm01111110 ldc <REG_M>,asidr   */{"ldc",{A_REG_M,A_ASIDR,0},{HEX_4,REG_M,HEX_7,HEX_E}, arch_j_core},
+/* 0100mmmm01011110 ldc <REG_M>,pteh    */{"ldc",{A_REG_M,A_PTEH,0},{HEX_4,REG_M,HEX_5,HEX_E}, arch_j4_up},
+/* 0100mmmm01101110 ldc <REG_M>,ptel    */{"ldc",{A_REG_M,A_PTEL,0},{HEX_4,REG_M,HEX_6,HEX_E}, arch_j4_up},
+/* 0100mmmm01111110 ldc <REG_M>,asidr   */{"ldc",{A_REG_M,A_ASIDR,0},{HEX_4,REG_M,HEX_7,HEX_E}, arch_j4_up},
 
 /* 0100nnnn01011110 ldc <REG_N>,MOD     */{"ldc",{A_REG_N,A_MOD},{HEX_4,REG_N,HEX_5,HEX_E}, arch_sh_dsp_up},
 
@@ -560,10 +580,10 @@ const sh_opcode_info sh_table[] =
 
 /* 0100nnnn01101010 lds <REG_M>,FPSCR   */{"lds",{A_REG_M,FPSCR_N},{HEX_4,REG_M,HEX_6,HEX_A}, arch_sh2e_up},
 
-/* 0100mmmm10001000 lds <REG_M>,cp0_com */{"lds",{A_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_8},arch_j_core},
-/* 0100mmmm01011010 lds <REG_M>,cpi_com */{"lds",{A_REG_M,A_CPI_COM,0},{HEX_4,REG_M,HEX_5,HEX_A},arch_j_core},
-/* 0100mmmm10001001 clds cp0_rm,cp0_com */{"clds",{A_CP0_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_9},arch_j_core},
-/* 1111mmmm00011101 clds cpi_rm,cpi_com */{"clds",{A_CPI_REG_M,A_CPI_COM,0},{HEX_F,REG_M,HEX_1,HEX_D},arch_j_core},
+/* 0100mmmm10001000 lds <REG_M>,cp0_com */{"lds",{A_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_8},arch_j2_up},
+/* 0100mmmm01011010 lds <REG_M>,cpi_com */{"lds",{A_REG_M,A_CPI_COM,0},{HEX_4,REG_M,HEX_5,HEX_A},arch_j2_up},
+/* 0100mmmm10001001 clds cp0_rm,cp0_com */{"clds",{A_CP0_REG_M,A_CP0_COM,0},{HEX_4,REG_M,HEX_8,HEX_9},arch_j2_up},
+/* 1111mmmm00011101 clds cpi_rm,cpi_com */{"clds",{A_CPI_REG_M,A_CPI_COM,0},{HEX_F,REG_M,HEX_1,HEX_D},arch_j2_up},
 
 /* 0100nnnn00000110 lds.l @<REG_N>+,MACH*/{"lds.l",{A_INC_N,A_MACH},{HEX_4,REG_N,HEX_0,HEX_6}, arch_sh_up},
 
@@ -792,11 +812,11 @@ const sh_opcode_info sh_table[] =
 
 /* 0000nnnn11111010 stc DBR,<REG_N>     */{"stc",{A_DBR,A_REG_N},{HEX_0,REG_N,HEX_F,HEX_A}, arch_sh4_nommu_nofpu_up},
 
-/* 0000nnnn01010011 stc pteh,<REG_N>   */{"stc",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_3}, arch_j_core},
-/* 0000nnnn01100011 stc ptel,<REG_N>   */{"stc",{A_PTEL,A_REG_N,0},{HEX_0,REG_N,HEX_6,HEX_3}, arch_j_core},
-/* 0000nnnn01110011 stc asidr,<REG_N>  */{"stc",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_7,HEX_3}, arch_j_core},
-/* 0000nnnn01000011 stc tsbptr,<REG_N> */{"stc",{A_TSBPTR,A_REG_N,0},{HEX_0,REG_N,HEX_4,HEX_3}, arch_j_core},
-/* 0000000001111000 ldtlb.rn           */{"ldtlb.rn",{0},{HEX_0,HEX_0,HEX_7,HEX_8}, arch_j_core},
+/* 0000nnnn01010011 stc pteh,<REG_N>   */{"stc",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_3}, arch_j4_up},
+/* 0000nnnn01100011 stc ptel,<REG_N>   */{"stc",{A_PTEL,A_REG_N,0},{HEX_0,REG_N,HEX_6,HEX_3}, arch_j4_up},
+/* 0000nnnn01110011 stc asidr,<REG_N>  */{"stc",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_7,HEX_3}, arch_j4_up},
+/* 0000nnnn01000011 stc tsbptr,<REG_N> */{"stc",{A_TSBPTR,A_REG_N,0},{HEX_0,REG_N,HEX_4,HEX_3}, arch_j4_up},
+/* 0000000001111000 ldtlb.rn           */{"ldtlb.rn",{0},{HEX_0,HEX_0,HEX_7,HEX_8}, arch_j4_up},
 
 /* 0000nnnn1xxx0010 stc Rn_BANK,<REG_N> */{"stc",{A_REG_B,A_REG_N},{HEX_0,REG_N,REG_B,HEX_2}, arch_sh3_nommu_up},
 
@@ -846,10 +866,10 @@ const sh_opcode_info sh_table[] =
 
 /* 0000nnnn01101010 sts FPSCR,<REG_N>   */{"sts",{FPSCR_M,A_REG_N},{HEX_0,REG_N,HEX_6,HEX_A}, arch_sh2e_up},
 
-/* 0100nnnn11001000 sts cp0_com,<REG_N> */{"sts",{A_CP0_COM,A_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_8},arch_j_core},
-/* 0000nnnn01011010 sts cpi_com,<REG_N> */{"sts",{A_CPI_COM,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_A},arch_j_core},
-/* 0100nnnn11001001 csts cp0_com,cp0_rn */{"csts",{A_CP0_COM,A_CP0_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_9},arch_j_core},
-/* 1111nnnn00001101 csts cpi_com,cpi_rn */{"csts",{A_CPI_COM,A_CPI_REG_N,0},{HEX_F,REG_N,HEX_0,HEX_D},arch_j_core},
+/* 0100nnnn11001000 sts cp0_com,<REG_N> */{"sts",{A_CP0_COM,A_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_8},arch_j2_up},
+/* 0000nnnn01011010 sts cpi_com,<REG_N> */{"sts",{A_CPI_COM,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_A},arch_j2_up},
+/* 0100nnnn11001001 csts cp0_com,cp0_rn */{"csts",{A_CP0_COM,A_CP0_REG_N,0},{HEX_4,REG_N,HEX_C,HEX_9},arch_j2_up},
+/* 1111nnnn00001101 csts cpi_com,cpi_rn */{"csts",{A_CPI_COM,A_CPI_REG_N,0},{HEX_F,REG_N,HEX_0,HEX_D},arch_j2_up},
 
 /* 0100nnnn00000010 sts.l MACH,@-<REG_N>*/{"sts.l",{A_MACH,A_DEC_N},{HEX_4,REG_N,HEX_0,HEX_2}, arch_sh_up},
 
