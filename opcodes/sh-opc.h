@@ -487,6 +487,14 @@ const sh_opcode_info sh_table[] =
 
 /* 0100nnnn00101110 ldc <REG_N>,VBR     */{"ldc",{A_REG_N,A_VBR},{HEX_4,REG_N,HEX_2,HEX_E}, arch_sh_up},
 
+/* J-core LDC-to-MMU-register forms are listed before the aliasing SH-DSP
+   MOD/RE/RS forms below, so that disassembly for the j-core target (which
+   never implements SH-DSP) prefers the j-core mnemonic on these encodings
+   that the two architecture families otherwise share.  */
+/* 0100mmmm01011110 ldc <REG_M>,pteh    */{"ldc",{A_REG_M,A_PTEH,0},{HEX_4,REG_M,HEX_5,HEX_E}, arch_j_core},
+/* 0100mmmm01101110 ldc <REG_M>,ptel    */{"ldc",{A_REG_M,A_PTEL,0},{HEX_4,REG_M,HEX_6,HEX_E}, arch_j_core},
+/* 0100mmmm01111110 ldc <REG_M>,asidr   */{"ldc",{A_REG_M,A_ASIDR,0},{HEX_4,REG_M,HEX_7,HEX_E}, arch_j_core},
+
 /* 0100nnnn01011110 ldc <REG_N>,MOD     */{"ldc",{A_REG_N,A_MOD},{HEX_4,REG_N,HEX_5,HEX_E}, arch_sh_dsp_up},
 
 /* 0100nnnn01111110 ldc <REG_N>,RE     */{"ldc",{A_REG_N,A_RE},{HEX_4,REG_N,HEX_7,HEX_E}, arch_sh_dsp_up},
