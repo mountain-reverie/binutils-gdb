@@ -356,10 +356,17 @@ SH4AL-dsp                                          SH4A
 		| arch_sh2a_nofpu_or_sh3_nommu_up \
 		| arch_sh_dsp_up \
 		| arch_j2_up)
+/* J4 implements the sh3/sh2a-nommu dynamic shifts (shld/shad, see their
+   arch masks below) and pref, so J4 is a descendant of this node -- fold
+   arch_j4_up in, mirroring the arch_j2_up fold into arch_sh2_up.  This lets
+   a J4 object link-merge with sh2a-nofpu-or-sh3-nommu objects (e.g. a J-core
+   kernel's checksum.o, which uses shld) instead of "unknown architecture".
+   J2 is NOT folded here: J2 lacks shld/shad.  */
 #define arch_sh2a_nofpu_or_sh3_nommu_up        (arch_sh2a_nofpu_or_sh3_nommu \
 		| arch_sh2a_nofpu_or_sh4_nommu_nofpu_up \
 		| arch_sh2a_or_sh3e_up \
-		| arch_sh3_nommu_up)
+		| arch_sh3_nommu_up \
+		| arch_j4_up)
 #define arch_sh2a_nofpu_or_sh4_nommu_nofpu_up  (arch_sh2a_nofpu_or_sh4_nommu_nofpu \
 		| arch_sh2a_nofpu_up \
 		| arch_sh2a_or_sh4_up \
