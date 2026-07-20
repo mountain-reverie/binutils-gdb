@@ -30,3 +30,7 @@ jcore_tests:
 	sts cpi_com,r2
 	clds cpi_r5,cpi_com
 	csts cpi_com,cpi_r7
+
+	! Fused TLB-miss tag compares (CSR vs Rn -> T)
+	cmp/eq pteh,r1
+	cmp/eq asidr,r1

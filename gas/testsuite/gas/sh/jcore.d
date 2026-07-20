@@ -20,3 +20,5 @@ Disassembly of section \.text:
 0+018 <[^>]*> 02 5a [ 	]*sts	fpul,r2
 0+01a <[^>]*> f5 1d [ 	]*clds	cpi_r5,cpi_com
 0+01c <[^>]*> f7 0d [ 	]*csts	cpi_com,cpi_r7
+0\+01e <[^>]*> 01 d3 [ 	]*cmp/eq	pteh,r1
+0\+020 <[^>]*> 01 f3 [ 	]*cmp/eq	asidr,r1

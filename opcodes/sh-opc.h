@@ -469,6 +469,8 @@ const sh_opcode_info sh_table[] =
 /* 10001000i8*1.... cmp/eq #<imm>,R0    */{"cmp/eq",{A_IMM,A_R0},{HEX_8,HEX_8,IMM0_8S}, arch_sh_up},
 
 /* 0011nnnnmmmm0000 cmp/eq <REG_M>,<REG_N>*/{"cmp/eq",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_0}, arch_sh_up},
+/* 0000nnnn11010011 cmp/eq pteh,<REG_N>  J4 fused TLB-miss VPN-tag compare */{"cmp/eq",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_D,HEX_3}, arch_j4_up},
+/* 0000nnnn11110011 cmp/eq asidr,<REG_N> J4 fused TLB-miss ASID-tag compare */{"cmp/eq",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_F,HEX_3}, arch_j4_up},
 
 /* 0011nnnnmmmm0011 cmp/ge <REG_M>,<REG_N>*/{"cmp/ge",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_3}, arch_sh_up},
 
