@@ -34,3 +34,4 @@ jcore_tests:
 	! Fused TLB-miss tag compares (CSR vs Rn -> T)
 	cmp/eq pteh,r1
 	cmp/eq asidr,r1
+	ldtlb.rn r5

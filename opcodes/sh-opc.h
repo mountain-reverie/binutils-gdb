@@ -829,6 +829,7 @@ const sh_opcode_info sh_table[] =
 
 /* 0000nnnn01001010 stc TBR,<REG_N> */ {"stc",{A_TBR,A_REG_N},{HEX_0,REG_N,HEX_4,HEX_A}, arch_sh2a_nofpu_up},
 
+/* 0000mmmm11111011 ldtlb.rn <REG_M>   */{"ldtlb.rn",{A_REG_M,0},{HEX_0,REG_M,HEX_F,HEX_B}, arch_j4_up},
 /* 0000000001111000 ldtlb.rn           */{"ldtlb.rn",{0},{HEX_0,HEX_0,HEX_7,HEX_8}, arch_j4_up},
 
 /* 0100nnnn00000011 stc.l SR,@-<REG_N>  */{"stc.l",{A_SR,A_DEC_N},{HEX_4,REG_N,HEX_0,HEX_3}, arch_sh_up},
