@@ -809,6 +809,29 @@ parse_reg_without_prefix (char *src, sh_arg_type *mode, int *reg)
       return 6;
     }
 
+  if (l0 == 'e' && l1 == 'x' && TOLOWER (src[2]) == 'p'
+      && TOLOWER (src[3]) == 'e' && TOLOWER (src[4]) == 'v'
+      && TOLOWER (src[5]) == 't' && ! IDENT_CHAR (src[6]))
+    {
+      *mode = A_EXPEVT;
+      return 6;
+    }
+
+  if (l0 == 'i' && l1 == 'n' && TOLOWER (src[2]) == 't'
+      && TOLOWER (src[3]) == 'e' && TOLOWER (src[4]) == 'v'
+      && TOLOWER (src[5]) == 't' && ! IDENT_CHAR (src[6]))
+    {
+      *mode = A_INTEVT;
+      return 6;
+    }
+
+  if (l0 == 't' && l1 == 'r' && TOLOWER (src[2]) == 'a'
+      && ! IDENT_CHAR (src[3]))
+    {
+      *mode = A_TRA;
+      return 3;
+    }
+
   /* J-core coprocessor operands: cp0_com / cpi_com command registers and
      cp0_r<N> / cpi_r<N> coprocessor register files (N = 0..15).  */
   if (l0 == 'c' && l1 == 'p'
@@ -1453,6 +1476,9 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	    case A_PTEL:
 	    case A_ASIDR:
 	    case A_TSBPTR:
+	    case A_EXPEVT:
+	    case A_INTEVT:
+	    case A_TRA:
 	    case A_CP0_COM:
 	    case A_CPI_COM:
 	      if (user->type != arg)

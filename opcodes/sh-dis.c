@@ -835,6 +835,15 @@ print_insn_sh (bfd_vma memaddr, struct disassemble_info *info)
 	    case A_TSBPTR:
 	      fprintf_fn (stream, "tsbptr");
 	      break;
+	    case A_EXPEVT:
+	      fprintf_fn (stream, "expevt");
+	      break;
+	    case A_INTEVT:
+	      fprintf_fn (stream, "intevt");
+	      break;
+	    case A_TRA:
+	      fprintf_fn (stream, "tra");
+	      break;
 	    case A_CP0_COM:
 	      fprintf_fn (stream, "cp0_com");
 	      break;
