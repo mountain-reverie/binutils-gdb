@@ -364,7 +364,9 @@ SH4AL-dsp                                          SH4A
    arch_j4_up in, mirroring the arch_j2_up fold into arch_sh2_up.  This lets
    a J4 object link-merge with sh2a-nofpu-or-sh3-nommu objects (e.g. a J-core
    kernel's checksum.o, which uses shld) instead of "unknown architecture".
-   J2 is NOT folded here: J2 lacks shld/shad.  */
+   J2 is NOT folded here: doing so would validate every
+   sh2a/sh3-nommu opcode on J2. J2's shad/shld are tagged
+   individually via arch_j2_up on their sh_table lines.  */
 #define arch_sh2a_nofpu_or_sh3_nommu_up        (arch_sh2a_nofpu_or_sh3_nommu \
 		| arch_sh2a_nofpu_or_sh4_nommu_nofpu_up \
 		| arch_sh2a_or_sh3e_up \
