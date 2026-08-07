@@ -778,9 +778,9 @@ const sh_opcode_info sh_table[] =
 
 /* repeat start end #<imm>        	*/{"repeat",{A_DISP_PC,A_DISP_PC,A_IMM},{REPEAT,HEX_2,IMM0_8S,HEX_8}, arch_sh_dsp_up},
 
-/* 0100nnnnmmmm1100 shad <REG_M>,<REG_N>*/{"shad",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_C}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up},
+/* 0100nnnnmmmm1100 shad <REG_M>,<REG_N>*/{"shad",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_C}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up|arch_j2_up},
 
-/* 0100nnnnmmmm1101 shld <REG_M>,<REG_N>*/{"shld",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_D}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up},
+/* 0100nnnnmmmm1101 shld <REG_M>,<REG_N>*/{"shld",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_D}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up|arch_j2_up},
 
 /* 0100nnnn00100000 shal <REG_N>        */{"shal",{A_REG_N},{HEX_4,REG_N,HEX_2,HEX_0}, arch_sh_up},
 
