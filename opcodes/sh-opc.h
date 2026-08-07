@@ -364,15 +364,7 @@ SH4AL-dsp                                          SH4A
    arch_j4_up in, mirroring the arch_j2_up fold into arch_sh2_up.  This lets
    a J4 object link-merge with sh2a-nofpu-or-sh3-nommu objects (e.g. a J-core
    kernel's checksum.o, which uses shld) instead of "unknown architecture".
-   J2 is NOT folded here: J2 does not implement the rest of the
-   sh2a-nofpu/sh3-nommu instruction set.  Note that J2 *does* implement
-   shld/shad: the original J-core "SH-2 Instruction Set.ods" spreadsheet
-   that the J2 decoder is generated from defines both (0100nnnnmmmm1100
-   SHAD, 0100nnnnmmmm1101 SHLD), and the behaviour -- including the
-   shift-count-zero edge cases -- was measured on the J2 RTL by
-   sim/tests/shldshadguard.S in the jcore-cpu repository.  Those two
-   opcodes therefore carry arch_j2_up on their own entries below, rather
-   than J2 being folded into this node.  */
+   J2 is NOT folded here: J2 lacks shld/shad.  */
 #define arch_sh2a_nofpu_or_sh3_nommu_up        (arch_sh2a_nofpu_or_sh3_nommu \
 		| arch_sh2a_nofpu_or_sh4_nommu_nofpu_up \
 		| arch_sh2a_or_sh3e_up \
@@ -786,9 +778,9 @@ const sh_opcode_info sh_table[] =
 
 /* repeat start end #<imm>        	*/{"repeat",{A_DISP_PC,A_DISP_PC,A_IMM},{REPEAT,HEX_2,IMM0_8S,HEX_8}, arch_sh_dsp_up},
 
-/* 0100nnnnmmmm1100 shad <REG_M>,<REG_N>*/{"shad",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_C}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up|arch_j2_up},
+/* 0100nnnnmmmm1100 shad <REG_M>,<REG_N>*/{"shad",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_C}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up},
 
-/* 0100nnnnmmmm1101 shld <REG_M>,<REG_N>*/{"shld",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_D}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up|arch_j2_up},
+/* 0100nnnnmmmm1101 shld <REG_M>,<REG_N>*/{"shld",{ A_REG_M,A_REG_N},{HEX_4,REG_N,REG_M,HEX_D}, arch_sh2a_nofpu_or_sh3_nommu_up|arch_j4_up},
 
 /* 0100nnnn00100000 shal <REG_N>        */{"shal",{A_REG_N},{HEX_4,REG_N,HEX_2,HEX_0}, arch_sh_up},
 
