@@ -476,7 +476,6 @@ const sh_opcode_info sh_table[] =
 /* 0011nnnnmmmm0000 cmp/eq <REG_M>,<REG_N>*/{"cmp/eq",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_0}, arch_sh_up},
 /* 0000nnnn11001011 cmp/eq pteh,<REG_N>  J4 fused TLB-miss VPN-tag compare */{"cmp/eq",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_C,HEX_B}, arch_j4_up},
 /* 0000nnnn11011011 cmp/eq asidr,<REG_N> J4 fused TLB-miss ASID-tag compare */{"cmp/eq",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_D,HEX_B}, arch_j4_up},
-/* 0000000011101011 cmp/miss expevt     J4 fused TLB fault-class test: T = (EXPEVT <= 0x080), i.e. T=1 on a miss, T=0 on a protection fault */{"cmp/miss",{A_EXPEVT,0},{HEX_0,HEX_0,HEX_E,HEX_B}, arch_j4_up},
 
 /* 0011nnnnmmmm0011 cmp/ge <REG_M>,<REG_N>*/{"cmp/ge",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_3}, arch_sh_up},
 
