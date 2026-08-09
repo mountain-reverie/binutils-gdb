@@ -474,8 +474,8 @@ const sh_opcode_info sh_table[] =
 /* 10001000i8*1.... cmp/eq #<imm>,R0    */{"cmp/eq",{A_IMM,A_R0},{HEX_8,HEX_8,IMM0_8S}, arch_sh_up},
 
 /* 0011nnnnmmmm0000 cmp/eq <REG_M>,<REG_N>*/{"cmp/eq",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_0}, arch_sh_up},
-/* 0000nnnn11010011 cmp/eq pteh,<REG_N>  J4 fused TLB-miss VPN-tag compare */{"cmp/eq",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_D,HEX_3}, arch_j4_up},
-/* 0000nnnn11110011 cmp/eq asidr,<REG_N> J4 fused TLB-miss ASID-tag compare */{"cmp/eq",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_F,HEX_3}, arch_j4_up},
+/* 0000nnnn11001011 cmp/eq pteh,<REG_N>  J4 fused TLB-miss VPN-tag compare */{"cmp/eq",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_C,HEX_B}, arch_j4_up},
+/* 0000nnnn11011011 cmp/eq asidr,<REG_N> J4 fused TLB-miss ASID-tag compare */{"cmp/eq",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_D,HEX_B}, arch_j4_up},
 
 /* 0011nnnnmmmm0011 cmp/ge <REG_M>,<REG_N>*/{"cmp/ge",{ A_REG_M,A_REG_N},{HEX_3,REG_N,REG_M,HEX_3}, arch_sh_up},
 
@@ -826,10 +826,10 @@ const sh_opcode_info sh_table[] =
 
 /* 0000nnnn11111010 stc DBR,<REG_N>     */{"stc",{A_DBR,A_REG_N},{HEX_0,REG_N,HEX_F,HEX_A}, arch_sh4_nommu_nofpu_up},
 
-/* 0000nnnn01010011 stc pteh,<REG_N>   */{"stc",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_3}, arch_j4_up},
-/* 0000nnnn01100011 stc ptel,<REG_N>   */{"stc",{A_PTEL,A_REG_N,0},{HEX_0,REG_N,HEX_6,HEX_3}, arch_j4_up},
-/* 0000nnnn01110011 stc asidr,<REG_N>  */{"stc",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_7,HEX_3}, arch_j4_up},
-/* 0000nnnn01000011 stc tsbptr,<REG_N> */{"stc",{A_TSBPTR,A_REG_N,0},{HEX_0,REG_N,HEX_4,HEX_3}, arch_j4_up},
+/* 0000nnnn10001011 stc pteh,<REG_N>   */{"stc",{A_PTEH,A_REG_N,0},{HEX_0,REG_N,HEX_8,HEX_B}, arch_j4_up},
+/* 0000nnnn10011011 stc ptel,<REG_N>   */{"stc",{A_PTEL,A_REG_N,0},{HEX_0,REG_N,HEX_9,HEX_B}, arch_j4_up},
+/* 0000nnnn10111011 stc asidr,<REG_N>  */{"stc",{A_ASIDR,A_REG_N,0},{HEX_0,REG_N,HEX_B,HEX_B}, arch_j4_up},
+/* 0000nnnn01001011 stc tsbptr,<REG_N> */{"stc",{A_TSBPTR,A_REG_N,0},{HEX_0,REG_N,HEX_4,HEX_B}, arch_j4_up},
 /* 0000nnnn01010010 stc expevt,<REG_N> */{"stc",{A_EXPEVT,A_REG_N,0},{HEX_0,REG_N,HEX_5,HEX_2}, arch_j4_up},
 /* 0000nnnn01100010 stc intevt,<REG_N> */{"stc",{A_INTEVT,A_REG_N,0},{HEX_0,REG_N,HEX_6,HEX_2}, arch_j4_up},
 /* 0000nnnn01110010 stc tra,<REG_N>    */{"stc",{A_TRA,A_REG_N,0},{HEX_0,REG_N,HEX_7,HEX_2}, arch_j4_up},
