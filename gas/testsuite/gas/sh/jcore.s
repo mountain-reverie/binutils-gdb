@@ -10,12 +10,6 @@ jcore_tests:
 	! Background debug
 	bgnd
 
-	! STC with MMU/TSB control registers
-	stc pteh,r1
-	stc ptel,r1
-	stc asidr,r1
-	stc tsbptr,r1
-
 	! Load TLB entry with return
 	ldtlb.rn
 
@@ -31,7 +25,7 @@ jcore_tests:
 	clds cpi_r5,cpi_com
 	csts cpi_com,cpi_r7
 
-	! Fused TLB-miss tag compares (CSR vs Rn -> T)
-	cmp/eq pteh,r1
-	cmp/eq asidr,r1
-	ldtlb.rn r5
+	! LDC to the MMU registers (kept: writes have no MMIO alias)
+	ldc r1,pteh
+	ldc r1,ptel
+	ldc r1,asidr
