@@ -10,9 +10,6 @@ jcore_tests:
 	! Background debug
 	bgnd
 
-	! Load TLB entry with return
-	ldtlb.rn
-
 	! CP0 coprocessor moves
 	lds r3,cp0_com
 	sts cp0_com,r2

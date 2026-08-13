@@ -68,8 +68,9 @@ Enable sh2e, sh3e, sh4, and sh4a insn sets.
 Enable sh1, sh2, sh2e, sh3, sh3e, sh4, sh4a, and sh-dsp insn sets.
 @item --isa=sh-jcore
 Enable J-core extensions: SH-2 base plus J-core-specific instructions
-(@code{cas.l}, @code{bgnd}, @code{ldtlb.rn}, MMU control register
-access via @code{stc}, and coprocessor @code{lds}/@code{sts}/@code{clds}/@code{csts}).
+(@code{cas.l}, @code{bgnd}, MMU control register writes via @code{ldc},
+exception register reads via @code{stc}, and coprocessor
+@code{lds}/@code{sts}/@code{clds}/@code{csts}).
 No MMU or coprocessor restrictions from SH-3/SH-4 apply.
 
 @item -h-tick-hex
@@ -266,15 +267,12 @@ and clears T.
 @item bgnd
 Background --- transfer control to the background debugger (breakpoint).
 
-@item ldtlb.rn
-Load TLB from @code{PTEH}/@code{PTEL} and return (fused fill-and-return
-from the TLB miss handler).
-
-@item stc pteh,Rn
-@itemx stc ptel,Rn
-@itemx stc asidr,Rn
-@itemx stc tsbptr,Rn
-Store MMU control register to @code{Rn}.  @code{tsbptr} is read-only.
+@item ldc Rm,pteh
+@itemx ldc Rm,ptel
+@itemx ldc Rm,asidr
+Write @code{Rm} to an MMU control register.  There are no corresponding
+@code{stc} reads: the hardware TSB walker installs TLB entries, and the
+readable state is reached through its MMIO aliases instead.
 
 @item lds Rm,cp0_com
 @itemx lds Rm,cpi_com

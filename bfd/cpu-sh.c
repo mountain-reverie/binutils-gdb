@@ -103,7 +103,7 @@ static struct { unsigned long bfd_mach, arch, arch_up; } bfd_to_arch_table[] =
   { bfd_mach_sh4_nommu_nofpu, arch_sh4_nommu_nofpu, arch_sh4_nommu_nofpu_up },
   { bfd_mach_sh4a_nofpu,      arch_sh4a_nofpu,	    arch_sh4a_nofpu_up },
   /* J2 target: arch_j2 (NOT arch_j2_up) deliberately excludes the
-     J4-only MMU/priv extensions (arch_j4), so ldtlb.rn etc. are
+     J4-only MMU/priv extensions (arch_j4), so "ldc Rm,pteh" etc. are
      rejected under --isa=sh-j2.  */
   { bfd_mach_sh_j2,           arch_j2,	            arch_j2 },
   /* J4 target: J4 hardware supports the full J-core base ISA (J2) plus

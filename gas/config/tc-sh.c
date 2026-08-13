@@ -1325,8 +1325,8 @@ get_operands (sh_opcode_info *info, char *args, sh_operand_info *operand)
       if (is_whitespace (*ptr))
 	ptr++;
 
-      /* A mnemonic may have both a no-operand and an operand form (e.g. the
-	 J-core ldtlb.rn / ldtlb.rn Rm pair). When no operand text is present,
+      /* A mnemonic may have both a no-operand and an operand form.
+	 When no operand text is present,
 	 leave operand[0].type = 0 so get_specific can select the no-operand
 	 form instead of get_operand failing with "missing operand". The
 	 operand-bearing form must precede the no-operand form in the table.  */

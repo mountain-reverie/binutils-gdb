@@ -618,7 +618,7 @@ const sh_opcode_info sh_table[] =
 
 /* 0100nnnn01100110 lds.l @<REG_M>+,FPSCR*/{"lds.l",{A_INC_M,FPSCR_N},{HEX_4,REG_M,HEX_6,HEX_6}, arch_sh2e_up},
 
-/* 0000000000111000 ldtlb               */{"ldtlb",{0},{HEX_0,HEX_0,HEX_3,HEX_8}, arch_sh3_up|arch_j4_up},
+/* 0000000000111000 ldtlb               */{"ldtlb",{0},{HEX_0,HEX_0,HEX_3,HEX_8}, arch_sh3_up},
 
 /* 0100nnnnmmmm1111 mac.w @<REG_M>+,@<REG_N>+*/{"mac.w",{A_INC_M,A_INC_N},{HEX_4,REG_N,REG_M,HEX_F}, arch_sh_up},
 
@@ -829,8 +829,6 @@ const sh_opcode_info sh_table[] =
 /* 0000nnnn1xxx0010 stc Rn_BANK,<REG_N> */{"stc",{A_REG_B,A_REG_N},{HEX_0,REG_N,REG_B,HEX_2}, arch_sh3_nommu_up|arch_j4_up},
 
 /* 0000nnnn01001010 stc TBR,<REG_N> */ {"stc",{A_TBR,A_REG_N},{HEX_0,REG_N,HEX_4,HEX_A}, arch_sh2a_nofpu_up},
-
-/* 0000000001111000 ldtlb.rn           */{"ldtlb.rn",{0},{HEX_0,HEX_0,HEX_7,HEX_8}, arch_j4_up},
 
 /* 0100nnnn00000011 stc.l SR,@-<REG_N>  */{"stc.l",{A_SR,A_DEC_N},{HEX_4,REG_N,HEX_0,HEX_3}, arch_sh_up},
 
