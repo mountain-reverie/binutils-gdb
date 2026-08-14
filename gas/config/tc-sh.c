@@ -801,14 +801,6 @@ parse_reg_without_prefix (char *src, sh_arg_type *mode, int *reg)
       return 5;
     }
 
-  if (l0 == 't' && l1 == 's' && TOLOWER (src[2]) == 'b'
-      && TOLOWER (src[3]) == 'p' && TOLOWER (src[4]) == 't'
-      && TOLOWER (src[5]) == 'r' && ! IDENT_CHAR (src[6]))
-    {
-      *mode = A_TSBPTR;
-      return 6;
-    }
-
   if (l0 == 'e' && l1 == 'x' && TOLOWER (src[2]) == 'p'
       && TOLOWER (src[3]) == 'e' && TOLOWER (src[4]) == 'v'
       && TOLOWER (src[5]) == 't' && ! IDENT_CHAR (src[6]))
@@ -1475,7 +1467,6 @@ get_specific (sh_opcode_info *opcode, sh_operand_info *operands)
 	    case A_PTEH:
 	    case A_PTEL:
 	    case A_ASIDR:
-	    case A_TSBPTR:
 	    case A_EXPEVT:
 	    case A_INTEVT:
 	    case A_TRA:

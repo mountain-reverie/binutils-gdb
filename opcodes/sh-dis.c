@@ -832,9 +832,6 @@ print_insn_sh (bfd_vma memaddr, struct disassemble_info *info)
 	    case A_ASIDR:
 	      fprintf_fn (stream, "asidr");
 	      break;
-	    case A_TSBPTR:
-	      fprintf_fn (stream, "tsbptr");
-	      break;
 	    case A_EXPEVT:
 	      fprintf_fn (stream, "expevt");
 	      break;
